@@ -20,7 +20,7 @@ import { ref, onMounted } from 'vue';
 const tasks = ref([])
 
 const fetchTasks = async() => {
-    const res = await fetch('/api/tasks')
+    const res = await fetch('http://localhost:5000/api/tasks')
     tasks.value = await res.json()
 }
 
