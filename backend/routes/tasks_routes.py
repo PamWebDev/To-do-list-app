@@ -33,3 +33,14 @@ def create_task():
     db.session.commit()
     return jsonify(task.to_dict()), 201
 
+@tasks_routes.route('/api/tasks/<int:id>', methods=['PUT'])
+def update_task(id):
+    data = request.get_json()
+    task = Tasks.query.get_or_404(id)
+    task.title = data['title']
+    task.description = data['description']
+    task.status = data['status']
+    task.updated_at = data.get('updatedAt', datetime.now(timezone.utc))
+    db.session.commit()
+    return jsonify(task.to_dict())
+
