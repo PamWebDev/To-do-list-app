@@ -1,16 +1,9 @@
 """ 
 Este módulo define el módelo de tabla para las tareas (tasks)
 """
-
-import enum
 from sqlalchemy import Column, Integer, String, Text, Enum, DateTime
 from sqlalchemy.sql import func
 from database.db import db
-
-class TaskStatus(enum.Enum):
-    PENDING = 'Pendiente'
-    IN_PROGRESS = 'En proceso'
-    COMPLETED = 'Completada'
 
 class Tasks(db.Model):
     """ Modelo de tabla para las tareas """
@@ -19,7 +12,7 @@ class Tasks(db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
-    status = Column(Enum(TaskStatus), nullable=False)
+    status = Column(String(50), nullable=False)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
@@ -31,7 +24,7 @@ class Tasks(db.Model):
             'id': self.id,
             'title': self.title,
             'decription': self.description,
-            'status': self.status.name,
+            'status': self.status,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
