@@ -44,3 +44,10 @@ def update_task(id):
     db.session.commit()
     return jsonify(task.to_dict())
 
+@tasks_routes.route('/api/tasks/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    task = Tasks.query.get_or_404(id)
+    db.session.delete(task)
+    db.session.commit()
+    return '', 204
+
